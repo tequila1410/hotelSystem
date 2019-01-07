@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
    * @param booking
    */
   showInfo(booking) {
-    this.showAdditionalInfo = true;
+    this.showAdditionalInfo = !this.showAdditionalInfo;
     this.selectedBooking = booking;
     
     this.selectedBooking.countDays = DashboardService.getDaysCount(this.selectedBooking.dateCheck, this.selectedBooking.dateEviction);
@@ -28,12 +28,6 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getRoomById(this.selectedBooking.number).subscribe((room: any) => {
       this.selectedBooking = {
         ...this.selectedBooking, room: room[0]
-      };
-    });
-    
-    this.dashboardService.getUserById(this.selectedBooking.idClient).subscribe((user: any) => {
-      this.selectedBooking = {
-        ...this.selectedBooking, user: user[0]
       };
     });
   }

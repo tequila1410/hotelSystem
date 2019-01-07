@@ -1,112 +1,116 @@
-<div class="main-top">
-  <table class="table borderless">
-    <tbody class="text-center value">
-    <tr>
-      <td class="bar text-center left">Количество свободных номеров</td>
-      <td class="bar text-center mid">Сейчас пороживает человек</td>
-      <td class="bar text-center right">Общее количество обработанных заявок</td>
-    </tr>
-    <tr>
-      <td class="left">
-        {{countEmptyRooms}}
-      </td>
-      <td class="mid">
-        {{countCurrentClients}}
-      </td>
-      <td class="right">
-        {{countAllRequests}}
-      </td>
-    </tr>
-    </tbody>
-  </table>
-</div>
-
-<div class="main-bot">
-  <aside class="main-left-side">
-    <h2>Заканчивающийся срок проживания</h2>
-    <br>
-    <table class="table table-bordered" *ngIf="bookings?.length > 0">
-      <thead class="text-center">
-      <tr>
-        <th width="10%" class="text-center">Номер</th>
-        <th width="40%" class="text-center">ФИО</th>
-        <th width="20%" class="text-center">Дата заселения</th>
-        <th width="20%" class="text-center">Дата выселения</th>
-      </tr>
-      </thead>
+<div class="row">
+  <div class="container">
+    <div class="main-top">
+      <table class="table borderless">
+        <tbody class="text-center value">
+        <tr>
+          <td class="bar text-center left">Количество свободных номеров</td>
+          <td class="bar text-center mid">Сейчас пороживает человек</td>
+          <td class="bar text-center right">Общее количество обработанных заявок</td>
+        </tr>
+        <tr>
+          <td class="left">
+            {{countEmptyRooms}}
+          </td>
+          <td class="mid">
+            {{countCurrentClients}}
+          </td>
+          <td class="right">
+            {{countAllRequests}}
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="main-bot">
+      <aside class="main-left-side">
+        <h2>Заканчивающийся срок проживания</h2>
+        <br>
+        <table class="table table-bordered active-reservations" *ngIf="bookings?.length > 0">
+          <thead class="text-center">
+          <tr>
+            <th width="10%" class="text-center">Номер</th>
+            <th width="40%" class="text-center">ФИО</th>
+            <th width="20%" class="text-center">Дата заселения</th>
+            <th width="20%" class="text-center">Дата выселения</th>
+          </tr>
+          </thead>
+          
+          <tbody class="text-center">
+          <tr *ngFor="let booking of bookings" (click)="showInfo(booking)">
+            <td width="10%">
+              {{booking.number}}
+            </td>
+            <td width="40%">
+              {{booking.name}}
+            </td>
+            <td width="20%">
+              {{booking.dateCheck.toLocaleString('en-US')}}
+            </td>
+            <td width="20%">
+              {{booking.dateEviction.toLocaleString('en-US')}}
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <h3 *ngIf="bookings?.length === 0">Нет заявок с заканчивающимся сроком проживания</h3>
+      </aside>
       
-      <tbody class="text-center">
-      <tr *ngFor="let booking of bookings" (click)="showInfo(booking)">
-        <td width="10%">
-          {{booking.number}}
-        </td>
-        <td width="40%">
-          {{booking.name}}
-        </td>
-        <td width="20%">
-          {{booking.dateCheck.toLocaleString('en-US')}}
-        </td>
-        <td width="20%">
-          {{booking.dateEviction.toLocaleString('en-US')}}
-        </td>
-      </tr>
-      </tbody>
-    </table>
-    <h3 *ngIf="bookings?.length === 0">Нет заявок с заканчивающимся сроком проживания</h3>
-  </aside>
-  
-  <aside class="main-right-side">
-    <div class="jumbotron" *ngIf="showAdditionalInfo">
-      <h2>Детальная информация</h2>
-      <div>
-        <div id="infoTab">
-          <div class="lead">Номер:
-            <p class="lead">
-              {{selectedBooking.number}}
-            </p>
+      <aside class="main-right-side">
+        <div class="jumbotron" *ngIf="showAdditionalInfo">
+          <h2>Детальная информация</h2>
+          <div>
+            <div id="infoTab">
+              <div class="lead">Номер:
+                <p class="lead">
+                  {{selectedBooking.number}}
+                </p>
+              </div>
+              <div class="lead">Посетитель:
+                <p class="lead">
+                  {{selectedBooking.name}}
+                </p>
+              </div>
+              <div class="lead">Дата заселения:
+                <p class="lead">
+                  {{selectedBooking.dateCheck}}
+                </p>
+              </div>
+              
+              <div class="lead">Дата выселения:
+                <p class="lead">
+                  {{selectedBooking.dateEviction}}
+                </p>
+              </div>
+              
+              <div class="lead">Количество дней:
+                <p class="lead">
+                  {{selectedBooking.countDays}}
+                </p>
+              </div>
+              
+              <div class="lead">Стоимость проживания:
+                <p class="lead">
+                  {{selectedBooking.room?.price * selectedBooking.countDays}}
+                </p> грн.
+              </div>
+              
+              <div class="lead">Статус:
+                <p class="lead"
+                   [class.green]="selectedBooking.status === 1"
+                   [class.red]="selectedBooking.status === 0"
+                >
+                  {{selectedBooking.status === 1 ? 'Active' : 'Disabled'}}
+                </p>
+              </div>
+            </div>
           </div>
-          <div class="lead">Посетитель:
-            <p class="lead">
-              {{selectedBooking.name}}
-            </p>
-          </div>
-          <div class="lead">Дата заселения:
-            <p class="lead">
-              {{selectedBooking.dateCheck}}
-            </p>
-          </div>
-         
-          <div class="lead">Дата выселения:
-            <p class="lead">
-              {{selectedBooking.dateEviction}}
-            </p>
-          </div>
-         
-          <div class="lead">Количество дней:
-            <p class="lead">
-              {{selectedBooking.countDays}}
-            </p>
-          </div>
-         
-          <div class="lead">Стоимость проживания:
-            <p class="lead">
-              {{selectedBooking.room?.price * selectedBooking.countDays}}
-            </p> грн.
-          </div>
-         
-          <div class="lead">Статус:
-            <p class="lead"
-               [class.green]="selectedBooking.status === 1"
-               [class.red]="selectedBooking.status === 0"
-            >
-              {{selectedBooking.status === 1 ? 'Active' : 'Disabled'}}
-            </p>
+          <div class="form-group">
+            <button type="submit" class="btn btn-default" data-bind="click: moveOut">Освободить комнату</button>
           </div>
         </div>
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-default" data-bind="click: moveOut">Освободить комнату</button>
-      </div>
+      </aside>
     </div>
-  </aside>
+  </div>
 </div>
