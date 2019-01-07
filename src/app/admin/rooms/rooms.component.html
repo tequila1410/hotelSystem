@@ -1,3 +1,80 @@
-<p>
-  rooms works!
-</p>
+<div>
+  <aside class="left-side">
+    <div class="form-group form-inline">
+      <label class="filter-col">Поиск по:</label>
+      <select id="search-pattern" class="form-control" disabled>
+        <option>Номеру</option>
+      </select>
+      <input [(ngModel)]="roomToSearch" (input)="onSearchChange($event.target.value)" type="text" class="form-control" id="search-field" placeholder="Введите данные для поиска...">
+      <a class="btn btn-primary" (click)="isVisibleAddBlock = true" style="float: right;"><span class="glyphicon glyphicon-plus"></span> Добавить</a>
+    </div>
+    <table class="table table-bordered" *ngIf="rooms?.length">
+      <thead>
+        <tr>
+          <th class="text-center">Номер</th>
+          <th class="text-center">Категория</th>
+          <th class="text-center">Мест</th>
+          <th class="text-center">Статус</th>
+          <th class="text-center">Цена / грн</th>
+        </tr>
+      </thead>
+        <tbody class="text-center" >
+          <tr *ngFor="let room of filteredRooms" (click)="selectRoom(room)">
+            <td class="td-number">{{room.number}}</td>
+            <td class="td-category" >{{room.name}}</td>
+            <td class="td-bed">{{room.countSeats}}</td>
+            <td
+              [class.text-green]="room.isEmpty"
+              [class.text-red]="!room.isEmpty"
+              >{{room.isEmpty ? 'Свободно' : 'Занято'}}</td>
+            <td class="td-price">{{room.price}}</td>
+          </tr>
+        </tbody>
+    </table>
+  </aside>
+
+  <aside class="right-side" *ngIf="isVisibleEditBlock || isVisibleAddBlock">
+    <div class="info" >
+        <h3>Информация о номере: </h3>
+        <hr>
+        <div *ngIf="isVisibleEditBlock">
+          <blockquote>
+            <p class="lead">Номер:
+              <span class="lead">{{selectedRoom.number}}</span>
+            </p><br><br>
+            <p class="lead">Категория:
+              <span class="lead">{{selectedRoom.category}}</span>
+            </p><br><br>
+            <p class="lead">Кол-во мест:
+              <span class="lead">{{selectedRoom.countSeats}}</span>
+            </p><br><br>
+            <p class="lead">Статус:
+              <span class="lead">{{selectedRoom.isEmpty}}</span>
+            </p><br><br>
+            <p class="lead">Кол-во посещений:
+              <span 
+              class="lead"
+              [class.text-green]="selectedRoom.isEmpty"
+              [class.text-red]="!selectedRoom.isEmpty"
+              >
+              {{selectedRoom.isEmpty ? 'Свободно' : 'Занято'}}
+            </span>
+            </p><br><br>
+            <p class="lead">Цена:
+              <span class="lead">{{selectedRoom.price}}</span> грн.
+            </p><br><br>
+          </blockquote>
+            <a (click)="isVisibleAddBlock = true" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Изменить</a>
+        </div>
+        <div *ngIf="isVisibleAddBlock">
+          <blockquote>
+            <p>Номер: <input class="form-control" type="text" name="Номер">{{selectedRoom ? selectedRoom.number : ''}}</p>
+            <p>Категория: <select id="category" class="form-control">{{selectedRoom ? selectedRoom.category : ''}}</select> </p>
+            <p>Кол-во мест: <input class="form-control" type="text" name="Места">{{selectedRoom ? selectedRoom.countSeats : ''}} </p>
+            <p>Статус: <select class="form-control"></select>{{selectedRoom ? selectedRoom.status : ''}} </p>
+          </blockquote>
+          <a class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Сохранить</a>               
+        </div>
+    </div>
+  </aside>
+</div>
