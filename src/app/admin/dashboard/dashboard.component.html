@@ -25,7 +25,7 @@
   <aside class="main-left-side">
     <h2>Заканчивающийся срок проживания</h2>
     <br>
-    <table class="table table-bordered" data-bind="visible: bookings().length > 0">
+    <table class="table table-bordered" *ngIf="bookings?.length > 0">
       <thead class="text-center">
       <tr>
         <th width="10%" class="text-center">Номер</th>
@@ -35,110 +35,78 @@
       </tr>
       </thead>
       
-      <tbody class="text-center" data-bind="foreach: bookings">
-      <tr>
-        <td width="10%" data-bind="click: $root.showInfo, text: number"></td>
-        <td width="40%" data-bind="click: $root.showInfo, text: name"></td>
-        <td width="20%" data-bind="click: $root.showInfo, text: dateCheck"></td>
-        <td width="20%" data-bind="click: $root.showInfo, text: dateEviction"></td>
+      <tbody class="text-center">
+      <tr *ngFor="let booking of bookings" (click)="showInfo(booking)">
+        <td width="10%">
+          {{booking.number}}
+        </td>
+        <td width="40%">
+          {{booking.name}}
+        </td>
+        <td width="20%">
+          {{booking.dateCheck.toLocaleString('en-US')}}
+        </td>
+        <td width="20%">
+          {{booking.dateEviction.toLocaleString('en-US')}}
+        </td>
       </tr>
       </tbody>
     </table>
-    <h3 data-bind="visible: bookings().length == 0">Нет заявок с заканчивающимся сроком проживания</h3>
+    <h3 *ngIf="bookings?.length === 0">Нет заявок с заканчивающимся сроком проживания</h3>
   </aside>
+  
   <aside class="main-right-side">
-    <blockquote data-bind="visible: showAdditionalInfo">
+    <div class="jumbotron" *ngIf="showAdditionalInfo">
       <h2>Детальная информация</h2>
-      <div name="tabs">
-        <ul>
-          <li><a href="#infoTab">Общая информция</a></li>
-          <li><a href="#roomTab">Комната</a></li>
-          <li><a href="#clientTab">Посетитель</a></li>
-        </ul>
+      <div>
         <div id="infoTab">
           <div class="lead">Номер:
-            <p class="lead" data-bind="text: infoTab().number"></p>
+            <p class="lead">
+              {{selectedBooking.number}}
+            </p>
           </div>
-          <br/><br/>
           <div class="lead">Посетитель:
-            <p class="lead" data-bind="text: infoTab().client"></p>
+            <p class="lead">
+              {{selectedBooking.name}}
+            </p>
           </div>
-          <br><br>
           <div class="lead">Дата заселения:
-            <p class="lead" data-bind="text: infoTab().dateCheck"></p>
+            <p class="lead">
+              {{selectedBooking.dateCheck}}
+            </p>
           </div>
-          <br><br>
+         
           <div class="lead">Дата выселения:
-            <p class="lead" data-bind="text: infoTab().dateEviction"></p>
+            <p class="lead">
+              {{selectedBooking.dateEviction}}
+            </p>
           </div>
-          <br><br>
+         
           <div class="lead">Количество дней:
-            <p class="lead" data-bind="text: infoTab().countDays"></p>
+            <p class="lead">
+              {{selectedBooking.countDays}}
+            </p>
           </div>
-          <br><br>
+         
           <div class="lead">Стоимость проживания:
-            <p class="lead" data-bind="text: infoTab().price"></p> грн.
+            <p class="lead">
+              {{selectedBooking.room?.price * selectedBooking.countDays}}
+            </p> грн.
           </div>
-          <br><br>
+         
           <div class="lead">Статус:
-            <p class="lead" data-bind="text: infoTab().status, style: {color: activeOrder() ? 'green' : 'red'}"></p>
-          </div>
-        </div>
-        <div id="roomTab">
-          <div class="lead">Номер:
-            <p class="lead" data-bind="text: roomTab().number"></p>
-          </div>
-          <br><br>
-          <div class="lead">Категория:
-            <p class="lead" data-bind="text: roomTab().category"></p>
-          </div>
-          <br><br>
-          <div class="lead">Кол-во мест:
-            <p class="lead" data-bind="text: roomTab().seats"></p>
-          </div>
-          <br><br>
-          <div class="lead">Статус:
-            <p class="lead" data-bind="text: roomTab().status, style: {color: emptyRoom() ? 'green' : 'red'}"></p>
-          </div>
-          <br><br>
-          <div class="lead">Кол-во посещений:
-            <p class="lead" data-bind="text: roomTab().countVisits"></p>
-          </div>
-          <br><br>
-          <div class="lead">Цена:
-            <p class="lead" data-bind="text: roomTab().price"></p> грн.
-          </div>
-          <br><br>
-        </div>
-        <div id="clientTab">
-          <div class="lead">Имя:
-            <p class="lead" data-bind="text: clientTab().name"></p>
-          </div>
-          <br> <br>
-          <div class="lead">Паспорт:
-            <p class="lead" data-bind="text: clientTab().passport"></p>
-          </div>
-          <br> <br>
-          <div class="lead">Телефон:
-            <p class="lead" data-bind="text: clientTab().phone"></p>
-          </div>
-          <br> <br>
-          <div class="lead">Дата рождения:
-            <p class="lead" data-bind="text: clientTab().bdate"></p>
-          </div>
-          <br> <br>
-          <div class="lead">Адрес:
-            <p class="lead" data-bind="text: clientTab().address"></p>
-          </div>
-          <br> <br>
-          <div class="lead">Кол-во посищений:
-            <p class="lead" data-bind="text: clientTab().countVisits"></p>
+            <p class="lead"
+               [class.green]="selectedBooking.status === 1"
+               [class.red]="selectedBooking.status === 0"
+            >
+              {{selectedBooking.status === 1 ? 'Active' : 'Disabled'}}
+            </p>
           </div>
         </div>
       </div>
       <div class="form-group">
         <button type="submit" class="btn btn-default" data-bind="click: moveOut">Освободить комнату</button>
       </div>
-    </blockquote>
+    </div>
   </aside>
 </div>
