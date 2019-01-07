@@ -1,0 +1,16 @@
+<section class="login">
+  <div class="login-block">
+    <h2 class="text-center login-title">Sign in</h2>
+    <div class="account-wall">
+      <img class="profile-img" src="assets/img/user.png" alt="icon-user">
+      <form [formGroup]="profileForm" class="form-signin" (ngSubmit)="login()">
+        <input type="text" class="form-control" placeholder="Username" formControlName="login">
+        <input type="password" class="form-control" placeholder="Password"
+              formControlName="password">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">
+          Sign in
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
