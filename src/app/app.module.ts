@@ -6,7 +6,7 @@ import { SigninComponent } from './auth/signin/signin.component';
 import {AuthModule} from './auth/auth.module';
 import {UserService} from './auth/user.service';
 import {AppRoutingModule} from './app-routing.module';
-import {ReactiveFormsModule} from '@angular/forms';
+import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RoomsComponent } from './admin/rooms/rooms.component';
@@ -29,6 +29,7 @@ import { ListComponent } from './admin/requests/list/list.component';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     AuthModule
   ],
   providers: [UserService],
