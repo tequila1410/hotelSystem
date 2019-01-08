@@ -24,9 +24,9 @@
             <td class="td-category" >{{room.name}}</td>
             <td class="td-bed">{{room.countSeats}}</td>
             <td
-              [class.text-green]="room.isEmpty"
-              [class.text-red]="!room.isEmpty"
-              >{{room.isEmpty ? 'Свободно' : 'Занято'}}</td>
+              [class.text-green]="room.isEmpty == 1"
+              [class.text-red]="room.isEmpty == 0"
+              >{{room.isEmpty == 1 ? 'Свободно' : 'Занято'}}</td>
             <td class="td-price">{{room.price}}</td>
           </tr>
         </tbody>
@@ -68,22 +68,22 @@
         </div>
         <div *ngIf="isVisibleAddBlock">
           <blockquote>
-            <p>Номер: <input class="form-control" type="text" name="Номер" [(ngModel)]="selectedRoom.number"></p>
+            <p>Номер: <input class="form-control" type="text" name="Номер" [value]="selectedRoom.number" #newNumber></p>
             <p>Категория: 
-              <select id="category" [(ngModel)]="selectedRoom.name" class="form-control">
-                <option *ngFor="let category of categories" [ngValue]="category.name">
+              <select id="category" [value]="selectedRoom.name" #newCategory class="form-control">
+                <option *ngFor="let category of categories" [ngValue]="selectedRoom.name">
                   {{ category.name }}
               </select>
             </p>
-            <p>Кол-во мест: <input class="form-control" type="text" name="Места" [(ngModel)]="selectedRoom.countSeats"></p>
+            <p>Кол-во мест: <input class="form-control" type="text" name="Места" [value]="selectedRoom.countSeats" #newCountSeats></p>
             <p>Статус: 
-              <select class="form-control" [(ngModel)]="selectedRoom.isEmpty">
+              <select class="form-control" [value]="selectedRoom.isEmpty" #newStatus>
                 <option value="1">Свободно</option>
                 <option value="0">Занято</option>
               </select>
             </p>
           </blockquote>
-          <a class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Сохранить</a>               
+          <a (click)="saveChangedRoom()" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Сохранить</a>               
         </div>
     </div>
   </aside>

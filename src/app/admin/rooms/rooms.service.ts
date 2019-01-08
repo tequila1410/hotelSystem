@@ -19,7 +19,24 @@ export class RoomsService {
     this.currentDate = today.getFullYear() + '-' + today.getMonth() + 1 + '-' + today.getDate();
   }
   
-  // getRooms(): Observable<any> {
-  //   return this.http.get(`${environment.apiUrl}/room/get/all`);
-  // }
+  getRooms(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/room/get/all`);
+  }
+
+  getCategories(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/room/get/category`);
+  }
+
+  changeRoom(id: number, number: number, category: number, countBed: number, status: string) {
+
+    const data = {
+      id: id, 
+      number: number,
+      category: category,
+      countBed: countBed,
+      status: +status
+    }
+    
+    return this.http.post(`${environment.apiUrl}/room/edit`, data);
+  }
 }
