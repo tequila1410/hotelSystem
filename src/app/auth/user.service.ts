@@ -19,4 +19,6 @@ export class UserService {
   verifyAuthentication() {
     return this.httpClient.get(`${environment.apiUrl}/auth/verifyAuthentication`, { withCredentials: true });
   }
+  
+  
 }

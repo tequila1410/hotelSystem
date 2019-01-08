@@ -1,3 +1,74 @@
-<p>
-  clients works!
-</p>
+<div>
+  <aside class="left-side">
+    <div class="form-inline">
+      <div class="form-group">
+        <label class="filter-col">Поиск по:</label>
+        <select [(ngModel)]="filterOption" id="filter-col" name="filter-col" class="form-control">
+          <option value="name">ФИО</option>
+          <option value="phone">Номеру телефона</option>
+        </select>
+        <input (input)="searchValueChange($event.target.value)" type="text" class="form-control" id="search-field"
+               placeholder="Введите данные для поиска">
+        <a class="btn btn-primary" style="float: right;"><span class="glyphicon glyphicon-plus"></span> Добавить</a>
+      </div>
+    </div>
+    <table *ngIf="clients.length" class="table table-bordered">
+      <thead>
+      <tr>
+        <th class="text-center">ФИО</th>
+        <th class="text-center">Телефон</th>
+      </tr>
+      </thead>
+      <tbody class="text-center">
+      <tr *ngFor="let client of filteredClients" (click)="selectClient(client)">
+        <td class="td-name">{{client.name}}</td>
+        <td class="td-phone">{{client.phone}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </aside>
+  <aside *ngIf="isDetailInfoVisible || isEditClientBlockVisible" class="right-side">
+    <div class="info">
+      <h3>Информация о клиенте: </h3>
+      <hr>
+      <div *ngIf="isDetailInfoVisible">
+        <blockquote>
+          <div class="lead">Имя:
+            <p class="lead"><b>{{selectedClient.name}}</b></p>
+          </div>
+          <div class="lead">Паспорт:
+            <p class="lead"><b>{{selectedClient.passport}}</b></p>
+          </div>
+          <div class="lead">Телефон:
+            <p class="lead"><b>{{selectedClient.phone}}</b></p>
+          </div>
+          <div class="lead">Дата рождения:
+            <p class="lead"><b>{{selectedClient.birthDate}}</b></p>
+          </div>
+          <div class="lead">Адрес:
+            <p class="lead"><b>{{selectedClient.address}}</b></p>
+          </div>
+          <div class="lead">Кол-во посищений:
+            <p class="lead"><b>{{selectedClient.countVisits}}</b></p>
+          </div>
+        </blockquote>
+        <a (click)="showEditBlock()" class="btn btn-warning" data-bind="click: editValue"><span class="glyphicon glyphicon-edit"></span>
+          Изменить</a>
+      </div>
+      
+      <div *ngIf="isEditClientBlockVisible">
+        <blockquote>
+          <p>Имя: <input class="form-control" type="text" name="Имя" [value]="selectedClient.name"></p>
+          <p>Паспорт: <input class="form-control" type="text" name="Паспорт" [value]="selectedClient.password"></p>
+          <p>Телефон: <input class="form-control" type="text" name="Телефон" [value]="selectedClient.phone"></p>
+          <p>Дата рождения: <input class="form-control" type="date" min="1996-01-01" name="Дата рождения"
+                                   [value]="selectedClient.birthDate"></p>
+          <p>Адрес: <input class="form-control" type="text" name="Адрес" [value]="selectedClient.address"></p>
+        </blockquote>
+        <a data-bind="click: saveChanges" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span>
+          Сохранить</a>
+      </div>
+    
+    </div>
+  </aside>
+</div>
