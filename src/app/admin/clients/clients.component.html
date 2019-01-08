@@ -58,14 +58,14 @@
       
       <div *ngIf="isEditClientBlockVisible">
         <blockquote>
-          <p>Имя: <input class="form-control" type="text" name="Имя" [value]="selectedClient.name"></p>
-          <p>Паспорт: <input class="form-control" type="text" name="Паспорт" [value]="selectedClient.password"></p>
-          <p>Телефон: <input class="form-control" type="text" name="Телефон" [value]="selectedClient.phone"></p>
+          <p>Имя: <input class="form-control" type="text" name="Имя" [value]="selectedClient.name" #changedName></p>
+          <p>Паспорт: <input class="form-control" type="text" name="Паспорт" [value]="selectedClient.passport" #changedPassport></p>
+          <p>Телефон: <input class="form-control" type="text" name="Телефон" [value]="selectedClient.phone" #changedPhone></p>
           <p>Дата рождения: <input class="form-control" type="date" min="1996-01-01" name="Дата рождения"
-                                   [value]="selectedClient.birthDate"></p>
-          <p>Адрес: <input class="form-control" type="text" name="Адрес" [value]="selectedClient.address"></p>
+                                   [value]="selectedClient.birthDate" #changedBDate></p>
+          <p>Адрес: <input class="form-control" type="text" name="Адрес" [value]="selectedClient.address" #changedAddress></p>
         </blockquote>
-        <a data-bind="click: saveChanges" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span>
+        <a (click)="saveChanges()" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span>
           Сохранить</a>
       </div>
     

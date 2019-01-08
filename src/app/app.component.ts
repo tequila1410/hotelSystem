@@ -9,7 +9,7 @@ export class AppComponent {
   constructor(private userService: UserService, private router: Router) {
     this.userService.verifyAuthentication().subscribe((data: any) => {
       if (data.isVerified) {
-        this.router.navigate(['dashboard']);
+        console.log('Verified');
       } else {
         alert('Вы не авторизированы. Редиректим Вас на страничку авторизации...');
         this.router.navigate(['login']);

@@ -1,6 +1,7 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ClientsService} from './clients.service';
 import {Subscription} from 'rxjs';
+import {Client} from './models/client.model';
 
 @Component({
   selector: 'app-clients',
@@ -18,18 +19,18 @@ export class ClientsComponent implements OnInit, OnDestroy {
    * Array of clients
    * @type {any[]}
    */
-  clients: any[] = [];
+  clients: Client[] = [];
   
   /**
    * Array of filtered clients
    * @type {any[]}
    */
-  filteredClients: any[] = [];
+  filteredClients: Client[] = [];
   
   /**
    * Selected client
    */
-  selectedClient: any;
+  selectedClient: Client;
   
   /**
    * If block with detail info is visible
@@ -48,17 +49,33 @@ export class ClientsComponent implements OnInit, OnDestroy {
    * @type {Subscription}
    */
   getAllClientsSubscription: Subscription;
+  
+  @ViewChild('changedName') changedName: any;
+  @ViewChild('changedPassport') changedPassport: any;
+  @ViewChild('changedPhone') changedPhone: any;
+  @ViewChild('changedBDate') changedBDate: any;
+  @ViewChild('changedAddress') changedAddress: any;
 
-  constructor(private clientsService: ClientsService) { }
-
-  ngOnInit() {
-    this.getAllClientsSubscription = this.clientsService.getAllClients().subscribe((data: any) => {
-      this.clients = [...data];
-      this.filteredClients = [...data];
-    })
+  constructor(private clientsService: ClientsService) {
+    this.getAllClientsSubscription = this.clientsService.allClientsSubject.subscribe((clients: Client[]) => {
+      this.clients = [...clients];
+      this.filteredClients = [...clients];
+    });
+  
+    this.clientsService.getAllClients();
   }
   
-  searchValueChange(searchStr: string) {
+  /**
+   * On component init
+   */
+  ngOnInit(): void {
+  }
+  
+  /**
+   * Implements client search
+   * @param {string} searchStr
+   */
+  searchValueChange(searchStr: string): void {
     console.log(this.filterOption);
     
     this.filteredClients = this.clients.filter((client) => {
@@ -71,18 +88,41 @@ export class ClientsComponent implements OnInit, OnDestroy {
   /**
    * Select client for more info or changing
    */
-  selectClient(client: any) {
+  selectClient(client: any): void {
     this.isDetailInfoVisible = true;
     this.isEditClientBlockVisible = false;
     this.selectedClient = client;
   }
   
-  showEditBlock() {
+  /**
+   * Show block to edit selected client
+   */
+  showEditBlock(): void {
     this.isDetailInfoVisible = false;
     this.isEditClientBlockVisible = true;
   }
   
-  ngOnDestroy() {
+  /**
+   * Save changed client info
+   */
+  saveChanges(): void {
+    const client = new Client(this.changedAddress.nativeElement.value, this.changedBDate.nativeElement.value, this.selectedClient.countVisits,
+      this.selectedClient.idClient, this.changedName.nativeElement.value, this.changedPassport.nativeElement.value, this.changedPhone.nativeElement.value);
+    this.clientsService.saveChangedClient(client).subscribe((response: { done: boolean }) => {
+    if (response.done) {
+      this.clientsService.getAllClients();
+      this.isEditClientBlockVisible = false;
+      this.isDetailInfoVisible = true;
+      this.selectedClient = client;
+      alert('Client\'s info changed.')
+    }
+    })
+  }
+  
+  /**
+   * On component destroy
+   */
+  ngOnDestroy(): void {
     if (this.getAllClientsSubscription) this.getAllClientsSubscription.unsubscribe();
   }
 
