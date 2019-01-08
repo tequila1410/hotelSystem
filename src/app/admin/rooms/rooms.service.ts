@@ -19,7 +19,7 @@ export class RoomsService {
     this.currentDate = today.getFullYear() + '-' + today.getMonth() + 1 + '-' + today.getDate();
   }
   
-  getRooms(): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/room/get/all`);
-  }
+  // getRooms(): Observable<any> {
+  //   return this.http.get(`${environment.apiUrl}/room/get/all`);
+  // }
 }

@@ -6,7 +6,7 @@
         <option>Номеру</option>
       </select>
       <input [(ngModel)]="roomToSearch" (input)="onSearchChange($event.target.value)" type="text" class="form-control" id="search-field" placeholder="Введите данные для поиска...">
-      <a class="btn btn-primary" (click)="isVisibleAddBlock = true" style="float: right;"><span class="glyphicon glyphicon-plus"></span> Добавить</a>
+      <a class="btn btn-primary" (click)="addNewRoom()" style="float: right;"><span class="glyphicon glyphicon-plus"></span> Добавить</a>
     </div>
     <table class="table table-bordered" *ngIf="rooms?.length">
       <thead>
@@ -43,7 +43,7 @@
               <span class="lead">{{selectedRoom.number}}</span>
             </p><br><br>
             <p class="lead">Категория:
-              <span class="lead">{{selectedRoom.category}}</span>
+              <span class="lead">{{selectedRoom.name}}</span>
             </p><br><br>
             <p class="lead">Кол-во мест:
               <span class="lead">{{selectedRoom.countSeats}}</span>
@@ -64,14 +64,24 @@
               <span class="lead">{{selectedRoom.price}}</span> грн.
             </p><br><br>
           </blockquote>
-            <a (click)="isVisibleAddBlock = true" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Изменить</a>
+            <a (click)="editSelectedRoom()" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Изменить</a>
         </div>
         <div *ngIf="isVisibleAddBlock">
           <blockquote>
-            <p>Номер: <input class="form-control" type="text" name="Номер">{{selectedRoom ? selectedRoom.number : ''}}</p>
-            <p>Категория: <select id="category" class="form-control">{{selectedRoom ? selectedRoom.category : ''}}</select> </p>
-            <p>Кол-во мест: <input class="form-control" type="text" name="Места">{{selectedRoom ? selectedRoom.countSeats : ''}} </p>
-            <p>Статус: <select class="form-control"></select>{{selectedRoom ? selectedRoom.status : ''}} </p>
+            <p>Номер: <input class="form-control" type="text" name="Номер" [(ngModel)]="selectedRoom.number"></p>
+            <p>Категория: 
+              <select id="category" [(ngModel)]="selectedRoom.name" class="form-control">
+                <option *ngFor="let category of categories" [ngValue]="category.name">
+                  {{ category.name }}
+              </select>
+            </p>
+            <p>Кол-во мест: <input class="form-control" type="text" name="Места" [(ngModel)]="selectedRoom.countSeats"></p>
+            <p>Статус: 
+              <select class="form-control" [(ngModel)]="selectedRoom.isEmpty">
+                <option value="1">Свободно</option>
+                <option value="0">Занято</option>
+              </select>
+            </p>
           </blockquote>
           <a class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Сохранить</a>               
         </div>
