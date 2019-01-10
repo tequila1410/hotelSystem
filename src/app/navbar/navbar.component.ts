@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {UserService} from '../auth/user.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
+  }
+  
+  /**
+   * Cleat cookies and log out user
+   */
+  logout(): void {
+  this.userService.logout().subscribe(() => {
+    localStorage.clear();
+    this.userService.isVarified = false;
+    this.router.navigate(['login'])
+  })
   }
 
 }

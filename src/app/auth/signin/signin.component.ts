@@ -23,9 +23,11 @@ export class SigninComponent implements OnInit {
   login(): void {
     this.userService.loginUser(this.profileForm.value.login, this.profileForm.value.password).subscribe((data: { success: boolean }) => {
       if (data.success) {
+        localStorage.setItem('isVerified', 'true');
         this.router.navigate(['dashboard']);
       } else {
-        alert('Check your login or password!')
+        alert('Check your login or password!');
+        this.userService.isVerified = false;
       }
     });
   }

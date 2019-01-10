@@ -5,6 +5,12 @@ import {environment} from '../../environments/environment';
 @Injectable()
 export class UserService {
   
+  /**
+   * If user is verified
+   * @type {boolean}
+   */
+  isVerified: boolean;
+  
   constructor(private httpClient: HttpClient) {
   }
   
@@ -18,6 +24,10 @@ export class UserService {
   
   verifyAuthentication() {
     return this.httpClient.get(`${environment.apiUrl}/auth/verifyAuthentication`, { withCredentials: true });
+  }
+  
+  logout() {
+    return this.httpClient.post(`${environment.apiUrl}/auth/logout`, null, { withCredentials: true });
   }
   
   

@@ -6,11 +6,16 @@ import {Router} from '@angular/router';
   selector: 'app-root', templateUrl: './app.component.html', styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  constructor(private userService: UserService, private router: Router) {
+  
+  constructor(public userService: UserService, private router: Router) {
     this.userService.verifyAuthentication().subscribe((data: any) => {
       if (data.isVerified) {
-        console.log('Verified');
-      } else {
+        this.userService.isVerified = true;
+        localStorage.setItem('isVerified', 'true');
+      }
+    }, (err) => {
+      localStorage.removeItem('isVerified');
+      if(this.userService.isVerified) {
         alert('Вы не авторизированы. Редиректим Вас на страничку авторизации...');
         this.router.navigate(['login']);
       }

@@ -6,19 +6,22 @@ import {RoomsComponent} from './admin/rooms/rooms.component';
 import {ListComponent} from './admin/requests/list/list.component';
 import {AddComponent} from './admin/requests/add/add.component';
 import {ClientsComponent} from './admin/clients/clients.component';
+import {SignupPermGuard} from './core/guards/signup-perm.guard';
 
 const appRoutes: Routes = [{
   path: 'login', component: SigninComponent
 }, {
-  path: 'dashboard', component: DashboardComponent
+  path: 'dashboard', component: DashboardComponent, canActivate: [SignupPermGuard]
 }, {
-  path: 'rooms', component: RoomsComponent
+  path: 'rooms', component: RoomsComponent, canActivate: [SignupPermGuard]
 }, {
-  path: 'clients', component: ClientsComponent
+  path: 'clients', component: ClientsComponent, canActivate: [SignupPermGuard]
 }, {
-  path: 'add-request', component: AddComponent
+  path: 'add-request', component: AddComponent, canActivate: [SignupPermGuard]
 }, {
-  path: 'request-list', component: ListComponent
+  path: 'request-list', component: ListComponent, canActivate: [SignupPermGuard]
+}, {
+  path: '', redirectTo: 'dashboard', pathMatch: 'full'
 }];
 
 @NgModule({
