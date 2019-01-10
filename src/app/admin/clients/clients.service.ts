@@ -51,5 +51,21 @@ export class ClientsService {
     
     return this.http.post(`${environment.apiUrl}/client/edit`, postData);
   }
-  
+
+  /**
+   * Query to server to save new client 
+   * @param {Client} client
+   */
+  addNewClient(client: Client): Observable<any> {
+    
+    let postData = {
+      name: client.name,
+      passport: client.passport,
+      phone: client.phone,
+      bdate: client.birthDate,
+      address: client.address
+    };
+    
+    return this.http.post(`${environment.apiUrl}/client/add`, postData);
+  }
 }

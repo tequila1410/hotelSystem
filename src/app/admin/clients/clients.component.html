@@ -11,7 +11,7 @@
           <input (input)="searchValueChange($event.target.value)" type="text" class="form-control" id="search-field"
                 placeholder="Введите данные для поиска">
         </div>
-        <a class="btn btn-primary add_button"><span class="glyphicon glyphicon-plus"></span> Добавить</a>
+        <a class="btn btn-primary add_button" (click)="addNewClient()"><span class="glyphicon glyphicon-plus"></span> Добавить</a>
       </div>
     </div>
     <table *ngIf="clients.length" class="table table-bordered">
@@ -60,12 +60,11 @@
       
       <div *ngIf="isEditClientBlockVisible">
         <blockquote>
-          <p>Имя: <input class="form-control" type="text" name="Имя" [value]="selectedClient.name" #changedName></p>
-          <p>Паспорт: <input class="form-control" type="text" name="Паспорт" [value]="selectedClient.passport" #changedPassport></p>
-          <p>Телефон: <input class="form-control" type="text" name="Телефон" [value]="selectedClient.phone" #changedPhone></p>
-          <p>Дата рождения: <input class="form-control" type="date" min="1996-01-01" name="Дата рождения"
-                                   [value]="selectedClient.birthDate" #changedBDate></p>
-          <p>Адрес: <input class="form-control" type="text" name="Адрес" [value]="selectedClient.address" #changedAddress></p>
+          <p>Имя: <input class="form-control" type="text" name="Имя" [value]="!isAddClientMode ? selectedClient.name : ''" #changedName></p>
+          <p>Паспорт: <input class="form-control" type="text" name="Паспорт" [value]="!isAddClientMode ? selectedClient.passport : ''" #changedPassport></p>
+          <p>Телефон: <input class="form-control" type="text" name="Телефон" [value]="!isAddClientMode ? selectedClient.phone : ''" #changedPhone></p>
+          <p>Дата рождения: <input class="form-control" type="date" min="1996-01-01" name="Дата рождения" [value]="!isAddClientMode ? selectedClient.birthDate : ''" #changedBDate></p>
+          <p>Адрес: <input class="form-control" type="text" name="Адрес" [value]="!isAddClientMode ? selectedClient.address : ''" #changedAddress></p>
         </blockquote>
         <a (click)="saveChanges()" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span>
           Сохранить</a>

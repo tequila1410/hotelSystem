@@ -43,7 +43,19 @@ export class ClientsComponent implements OnInit, OnDestroy {
    * @type {boolean}
    */
   isEditClientBlockVisible: boolean = false;
+
+  /**
+   * If need to add new client
+   * @type {boolean}
+   */
+  isAddClientMode: boolean = false;
   
+  /**
+   * If block to add new client is visible
+   * @type {boolean}
+   */
+  isAddClientBlockVisible: boolean = false;
+
   /**
    * Contains subscriptions which react on clients data change
    * @type {Subscription}
@@ -92,6 +104,7 @@ export class ClientsComponent implements OnInit, OnDestroy {
     this.isDetailInfoVisible = true;
     this.isEditClientBlockVisible = false;
     this.selectedClient = client;
+    this.isAddClientMode = false;
   }
   
   /**
@@ -117,6 +130,12 @@ export class ClientsComponent implements OnInit, OnDestroy {
       alert('Client\'s info changed.')
     }
     })
+  }
+
+  addNewClient(): void {
+    this.isAddClientMode = true;
+    this.isEditClientBlockVisible = true;
+    this.isDetailInfoVisible = false;
   }
   
   /**
