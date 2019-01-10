@@ -1,6 +1,7 @@
 import { Component, OnInit, ɵConsole, ViewChild, ElementRef } from '@angular/core';
 import { RoomsService } from './rooms.service';
 import { Room } from './models/room.model'
+import { Category } from './models/category.model'
 
 @Component({
   selector: 'app-rooms',
@@ -16,8 +17,9 @@ export class RoomsComponent implements OnInit {
   isVisibleAddBlock: boolean = false;
   isVisibleEditBlock: boolean = false;
   selectedRoom: Room;
+  newRoomMode: boolean = false;
   
-  categories: any[];
+  categories: Category[];
 
   @ViewChild('newNumber') newNumber: ElementRef;
   @ViewChild('newCategory') newCategory: any;
@@ -32,7 +34,6 @@ export class RoomsComponent implements OnInit {
     })
 
     this.roomsService.getRooms().subscribe(data => {
-      console.log(data)
       this.rooms = [...data];
       this.filteredRooms = [...data];
     })
@@ -50,14 +51,27 @@ export class RoomsComponent implements OnInit {
     this.selectedRoom = room;
     this.isVisibleEditBlock = true;
     if (this.isVisibleAddBlock) {
-      this.isVisibleEditBlock = false;
+      this.isVisibleAddBlock = false;
+      this.isVisibleEditBlock = true;
+      this.newRoomMode = false;
     }
   }
 
   addNewRoom() {
+    this.newRoomMode = true;
+    this.selectedRoom = null;
     this.isVisibleAddBlock = true;
     this.isVisibleEditBlock = false;
-    this.selectedRoom = null;
+  }
+
+  createNewRoom() {
+    let categoryName = this.categoryName();
+    this.roomsService.addNewRoom(+this.newNumber.nativeElement.value, categoryName, +this.newCountSeats.nativeElement.value, this.newStatus.nativeElement.value).subscribe(response => {
+      this.roomsService.getRooms().subscribe(data => {
+        this.rooms = [...data];
+        this.filteredRooms = [...data];
+      })
+    })
   }
 
   editSelectedRoom() {
@@ -67,22 +81,37 @@ export class RoomsComponent implements OnInit {
     }
   }
 
+  deleteSelectedRoom() {
+    if (!this.isEmptyObject(this.selectedRoom)) {
+      this.roomsService.deleteRoom(this.selectedRoom.idRoom).subscribe(data => {
+        this.roomsService.getRooms().subscribe(data => {
+          this.rooms = [...data];
+          this.filteredRooms = [...data];
+        })
+      });
+    }
+  }
+
   saveChangedRoom() {
+    let categoryName = this.categoryName();
+    this.roomsService.changeRoom(this.selectedRoom.idRoom, this.newNumber.nativeElement.value,
+      categoryName, this.newCountSeats.nativeElement.value, 
+      this.newStatus.nativeElement.value).subscribe(response => {
+        this.roomsService.getRooms().subscribe(data => {
+          this.rooms = [...data];
+          this.filteredRooms = [...data];
+        })
+    })
+  }
+
+  categoryName() {
     let categoryName;
     this.categories.map(category => {
       if(category.name == this.newCategory.nativeElement.value) {
         categoryName = category.idCategories;
       }
     })
-
-    this.roomsService.changeRoom(this.selectedRoom.idRoom, this.newNumber.nativeElement.value,
-      categoryName, this.newCountSeats.nativeElement.value, 
-      this.newStatus.nativeElement.value).subscribe(response => {
-        this.selectedRoom.number = this.newNumber.nativeElement.value;
-        this.selectedRoom.name = this.newCategory.nativeElement.value;
-        this.selectedRoom.countSeats = this.newCountSeats.nativeElement.value;
-        this.selectedRoom.isEmpty = this.newStatus.nativeElement.value;
-    })
+    return categoryName
   }
 
   isEmptyObject(obj){

@@ -48,10 +48,10 @@
             <p class="lead">Кол-во мест:
               <span class="lead">{{selectedRoom.countSeats}}</span>
             </p><br><br>
-            <p class="lead">Статус:
-              <span class="lead">{{selectedRoom.isEmpty}}</span>
+            <p class="lead">Количество посещений:
+              <span class="lead">{{selectedRoom.countVisits}}</span>
             </p><br><br>
-            <p class="lead">Кол-во посещений:
+            <p class="lead">Статус:
               <span 
               class="lead"
               [class.text-green]="selectedRoom.isEmpty"
@@ -65,25 +65,26 @@
             </p><br><br>
           </blockquote>
             <a (click)="editSelectedRoom()" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Изменить</a>
+            <a (click)="deleteSelectedRoom()" style="margin-left: 25px" class="btn btn-danger"><span class="glyphicon glyphicon-delete"></span> Удалить</a>
         </div>
         <div *ngIf="isVisibleAddBlock">
           <blockquote>
-            <p>Номер: <input class="form-control" type="text" name="Номер" [value]="selectedRoom.number" #newNumber></p>
+            <p>Номер: <input class="form-control" type="text" name="Номер" [value]="!newRoomMode ? selectedRoom.number : ''" #newNumber></p>
             <p>Категория: 
-              <select id="category" [value]="selectedRoom.name" #newCategory class="form-control">
-                <option *ngFor="let category of categories" [ngValue]="selectedRoom.name">
+              <select id="category" [value]="!newRoomMode ? selectedRoom.name : ''" #newCategory class="form-control">
+                <option *ngFor="let category of categories" [ngValue]="!newRoomMode ? selectedRoom.name : ''">
                   {{ category.name }}
               </select>
             </p>
-            <p>Кол-во мест: <input class="form-control" type="text" name="Места" [value]="selectedRoom.countSeats" #newCountSeats></p>
+            <p>Кол-во мест: <input class="form-control" type="text" name="Места" [value]="!newRoomMode ? selectedRoom.countSeats : ''" #newCountSeats></p>
             <p>Статус: 
-              <select class="form-control" [value]="selectedRoom.isEmpty" #newStatus>
+              <select class="form-control" [value]="!newRoomMode ? selectedRoom.isEmpty : ''" #newStatus>
                 <option value="1">Свободно</option>
                 <option value="0">Занято</option>
               </select>
             </p>
           </blockquote>
-          <a (click)="saveChangedRoom()" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Сохранить</a>               
+          <a (click)="!newRoomMode ? saveChangedRoom() : createNewRoom()" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Сохранить</a>               
         </div>
     </div>
   </aside>

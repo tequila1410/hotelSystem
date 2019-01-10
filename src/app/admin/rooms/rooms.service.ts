@@ -39,4 +39,20 @@ export class RoomsService {
     
     return this.http.post(`${environment.apiUrl}/room/edit`, data);
   }
+
+  addNewRoom(number: number, category: number, countBed: number, status: string) {
+
+    const data = {
+      number: number,
+      category: category,
+      countBed: countBed,
+      status: +status
+    }
+    
+    return this.http.post(`${environment.apiUrl}/room/add`, data);
+  }
+
+  deleteRoom(roomId: any) {
+    return this.http.post(`${environment.apiUrl}/room/delete`, {idRoom: roomId});
+  }
 }
