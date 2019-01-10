@@ -137,7 +137,36 @@ export class ClientsComponent implements OnInit, OnDestroy {
     this.isEditClientBlockVisible = true;
     this.isDetailInfoVisible = false;
   }
-  
+
+  createNewClient(): void {
+    console.log('asd')
+
+    const client: Client = new Client (this.changedAddress.nativeElement.value, this.changedBDate.nativeElement.value, null,
+      null, this.changedName.nativeElement.value, this.changedPassport.nativeElement.value, this.changedPhone.nativeElement.value);
+      
+    this.clientsService.addNewClient(client).subscribe(data => {
+      this.clientsService.getAllClients();
+    })
+  }
+
+  deleteSelectedClient() {
+    if (!this.isEmptyObject(this.selectedClient)) {
+      this.clientsService.deleteClient(this.selectedClient.idClient).subscribe(data => {
+        this.isAddClientBlockVisible = false;
+        this.isAddClientMode = false;
+        this.isDetailInfoVisible = false;
+
+        const elementIndex = this.clients.findIndex(element => element.idClient === this.selectedClient.idClient);
+        this.clients.splice(elementIndex, 1);
+        this.filteredClients = [...this.clients];
+      });
+    }
+  }
+
+  isEmptyObject(obj){
+    return (Object.getOwnPropertyNames(obj).length === 0);
+  }
+
   /**
    * On component destroy
    */

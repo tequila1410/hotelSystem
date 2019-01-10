@@ -54,8 +54,9 @@
             <p class="lead"><b>{{selectedClient.countVisits}}</b></p>
           </div>
         </blockquote>
-        <a (click)="showEditBlock()" class="btn btn-warning" data-bind="click: editValue"><span class="glyphicon glyphicon-edit"></span>
-          Изменить</a>
+        <a (click)="showEditBlock()" class="btn btn-warning" data-bind="click: editValue"><span class="glyphicon glyphicon-edit"></span>Изменить</a>
+        <a (click)="deleteSelectedClient()" style="margin-left: 25px" class="btn btn-danger"><span class="glyphicon glyphicon-delete"></span>Удалить</a>
+
       </div>
       
       <div *ngIf="isEditClientBlockVisible">
@@ -66,7 +67,7 @@
           <p>Дата рождения: <input class="form-control" type="date" min="1996-01-01" name="Дата рождения" [value]="!isAddClientMode ? selectedClient.birthDate : ''" #changedBDate></p>
           <p>Адрес: <input class="form-control" type="text" name="Адрес" [value]="!isAddClientMode ? selectedClient.address : ''" #changedAddress></p>
         </blockquote>
-        <a (click)="saveChanges()" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span>
+        <a (click)="!isAddClientMode ? saveChanges() : createNewClient()" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span>
           Сохранить</a>
       </div>
     

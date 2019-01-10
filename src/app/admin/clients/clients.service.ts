@@ -57,7 +57,7 @@ export class ClientsService {
    * @param {Client} client
    */
   addNewClient(client: Client): Observable<any> {
-    
+
     let postData = {
       name: client.name,
       passport: client.passport,
@@ -68,4 +68,12 @@ export class ClientsService {
     
     return this.http.post(`${environment.apiUrl}/client/add`, postData);
   }
+
+  /**
+   * This methods removes room by it's id
+   * @param clientId
+   */
+  deleteClient(clientId: any) {
+    return this.http.delete(`${environment.apiUrl}/client/delete/${clientId}`);
+  } 
 }
