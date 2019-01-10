@@ -1,3 +1,142 @@
-<p>
-  list works!
-</p>
+<div class="booking-toggle">
+    <form class="form-inline" role="form">
+        <div class="form-group">
+            <button type="submit" class="btn btn-default">Список текущих заявок</button>
+            <button type="submit" class="btn btn-default">Список всех заявок</button>
+        </div>
+    </form>
+</div>
+<div>
+    <aside *ngIf="currentOrAllBookingsVisible" class="booking-left-side">
+        <table class="table table-bordered">
+            <thead class="text-center">
+                <tr>
+                    <th width="10%" class="text-center">Номер</th>
+                    <th width="40%" class="text-center">ФИО</th>
+                    <th width="20%" class="text-center">Дата заселения</th>
+                    <th width="20%" class="text-center">Дата выселения</th>
+                </tr>
+            </thead>
+
+            <tbody class="text-center">
+                <tr>
+                    <td width="10%"></td>
+                    <td width="40%"></td>
+                    <td width="20%"></td>
+                    <td width="20%"></td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Все комнаты свободны!</h3>
+    </aside>
+    <aside *ngIf="!currentOrAllBookingsVisible" class="booking-left-side">
+        <form class="form-inline" role="form">
+            <div class="form-group">
+                <p class="filter-col">Дата: </p>
+                <input type="date" id="searchValue" class="form-control">
+                <button type="submit" class="btn btn-default">Найти</button>
+            </div>
+        </form>
+        <table class="table table-bordered">
+            <thead class="text-center">
+                <tr>
+                    <th width="10%" class="text-center">Номер</th>
+                    <th width="40%" class="text-center">ФИО</th>
+                    <th width="20%" class="text-center">Дата заселения</th>
+                    <th width="20%" class="text-center">Дата выселения</th>
+                </tr>
+            </thead>
+
+            <tbody class="text-center">
+                <tr>
+                    <td width="10%"></td>
+                    <td width="40%"></td>
+                    <td width="20%"></td>
+                    <td width="20%"></td>
+                </tr>
+            </tbody>
+        </table>
+    </aside>
+    <aside class="booking-right-side">
+        <blockquote>
+            <h2>Детальная информация</h2>
+            <div name="tabs">
+                <ul>
+                    <li><a href="#infoTab">Общая информция</a></li>
+                    <li><a href="#roomTab">Комната</a></li>
+                    <li><a href="#clientTab">Посетитель</a></li>
+                </ul>
+                <div id="infoTab">
+                    <p class="lead">Номер:
+                        <span class="lead"></span>
+                    </p><br><br>
+                    <p class="lead">Посетитель:
+                        <span class="lead"></span>
+                    </p><br><br>
+                    <p class="lead">Дата заселения:
+                        <span class="lead"></span>
+                    </p><br><br>
+                    <p class="lead">Дата выселения:
+                        <span class="lead"></span>
+                    </p><br><br>
+                    <p class="lead">Количество дней:
+                        <span class="lead"></span>
+                    </p><br><br>
+                    <p class="lead">Количество жильцов:
+                        <span class="lead"></span>
+                    </p><br><br>
+                    <p class="lead">Стоимость проживания:
+                        <span class="lead"></span> грн.</p><br><br>
+                    <p class="lead">Статус:
+                        <span class="lead"></span>
+                    </p>
+                </div>
+                <div id="roomTab">
+                    <p class="lead">Номер:
+                        <span class="lead"></span>
+                    </p><br><br>
+                    <p class="lead">Категория:
+                        <span class="lead"></span>
+                    </p><br><br>
+                    <p class="lead">Кол-во мест:
+                        <span class="lead"></span>
+                    </p><br><br>
+                    <p class="lead">Статус:
+                        <span class="lead"></span>
+                    </p><br><br>
+                    <p class="lead">Кол-во посещений:
+                        <span class="lead"></span>
+                    </p><br><br>
+                    <p class="lead">Цена:
+                        <span class="lead"></span> грн.
+                    </p><br><br>
+                </div>
+                <div id="clientTab">
+                    <p class="lead">Имя:
+                        <span class="lead"></span>
+                    </p>
+                    <br> <br>
+                    <p class="lead">Паспорт:
+                        <span class="lead"></span>
+                    </p>
+                    <br> <br>
+                    <p class="lead">Телефон:
+                        <span class="lead"></span>
+                    </p>
+                    <br> <br>
+                    <p class="lead">Дата рождения:
+                        <span class="lead"></span>
+                    </p>
+                    <br><br>
+                    <p class="lead">Адрес:
+                        <span class="lead"></span>
+                    </p>
+                    <br> <br>
+                    <p class="lead">Кол-во посищений:
+                        <span class="lead"></span>
+                    </p>
+                </div>
+            </div>
+        </blockquote>
+    </aside>
+</div>
