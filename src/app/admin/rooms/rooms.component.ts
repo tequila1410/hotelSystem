@@ -13,13 +13,13 @@ export class RoomsComponent implements OnInit {
   
   rooms: Room[];
   filteredRooms: Room[] = [];
+  categories: Category[];
+  
   roomToSearch: string;
   isVisibleAddBlock: boolean = false;
   isVisibleEditBlock: boolean = false;
   selectedRoom: Room;
   newRoomMode: boolean = false;
-  
-  categories: Category[];
 
   @ViewChild('newNumber') newNumber: ElementRef;
   @ViewChild('newCategory') newCategory: any;

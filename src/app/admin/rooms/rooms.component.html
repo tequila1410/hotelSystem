@@ -1,4 +1,4 @@
-<div>
+<div class="container rooms_container">
   <aside class="left-side">
     <div class="form-group form-inline">
       <label class="filter-col">Поиск по:</label>
@@ -19,7 +19,7 @@
         </tr>
       </thead>
         <tbody class="text-center" >
-          <tr *ngFor="let room of filteredRooms" (click)="selectRoom(room)">
+          <tr *ngFor="let room of filteredRooms" [ngClass]="{'room_rows': true, 'active': room.idRoom == selectedRoom?.idRoom}" (click)="selectRoom(room)">
             <td class="td-number">{{room.number}}</td>
             <td class="td-category" >{{room.name}}</td>
             <td class="td-bed">{{room.countSeats}}</td>

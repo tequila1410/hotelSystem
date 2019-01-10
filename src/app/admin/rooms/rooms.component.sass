@@ -1,8 +1,30 @@
-.form-group     
+.rooms_container
+  margin: 0 auto
   display: flex
-  flex-wrap: wrap
-  justify-content: space-between
-.text-green
-  color: green
-.text-red
-  color: red
+  .left-side
+    position: static
+
+  .left-side
+    width: 70%
+    left: 10px
+    position: static
+  .right-side
+    right: 0
+    width: 30%
+    position: fixed
+
+  .form-group     
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
+  .text-green
+    color: green
+  .text-red
+    color: red
+
+  .room_rows
+    &:hover
+      cursor: pointer
+      background-color: #efefef
+    &.active
+      background-color: rgba(0,0,0, .3)
