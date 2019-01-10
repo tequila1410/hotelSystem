@@ -20,7 +20,7 @@ export class NavbarComponent implements OnInit {
   logout(): void {
   this.userService.logout().subscribe(() => {
     localStorage.clear();
-    this.userService.isVarified = false;
+    this.userService.isVerified = false;
     this.router.navigate(['login'])
   })
   }
