@@ -41,7 +41,6 @@ export class RoomsService {
   }
 
   addNewRoom(number: number, category: number, countBed: number, status: string) {
-
     const data = {
       number: number,
       category: category,
@@ -52,7 +51,11 @@ export class RoomsService {
     return this.http.post(`${environment.apiUrl}/room/add`, data);
   }
 
+  /**
+   * This methods removes room by it's id
+   * @param roomId
+   */
   deleteRoom(roomId: any) {
-    return this.http.post(`${environment.apiUrl}/room/delete`, {idRoom: roomId});
+    return this.http.delete(`${environment.apiUrl}/room/delete/${roomId}`);
   }
 }

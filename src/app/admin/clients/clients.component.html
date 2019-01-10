@@ -1,15 +1,17 @@
-<div>
+<div class="container rooms_container clients_container">
   <aside class="left-side">
     <div class="form-inline">
       <div class="form-group">
-        <label class="filter-col">Поиск по:</label>
-        <select [(ngModel)]="filterOption" id="filter-col" name="filter-col" class="form-control">
-          <option value="name">ФИО</option>
-          <option value="phone">Номеру телефона</option>
-        </select>
-        <input (input)="searchValueChange($event.target.value)" type="text" class="form-control" id="search-field"
-               placeholder="Введите данные для поиска">
-        <a class="btn btn-primary" style="float: right;"><span class="glyphicon glyphicon-plus"></span> Добавить</a>
+        <div class="controls">
+          <label class="filter-col">Поиск по:</label>
+          <select [(ngModel)]="filterOption" id="filter-col" name="filter-col" class="form-control">
+            <option value="name">ФИО</option>
+            <option value="phone">Номеру телефона</option>
+          </select>
+          <input (input)="searchValueChange($event.target.value)" type="text" class="form-control" id="search-field"
+                placeholder="Введите данные для поиска">
+        </div>
+        <a class="btn btn-primary add_button"><span class="glyphicon glyphicon-plus"></span> Добавить</a>
       </div>
     </div>
     <table *ngIf="clients.length" class="table table-bordered">

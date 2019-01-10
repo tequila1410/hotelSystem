@@ -68,6 +68,9 @@ export class RoomsComponent implements OnInit {
     let categoryName = this.categoryName();
     this.roomsService.addNewRoom(+this.newNumber.nativeElement.value, categoryName, +this.newCountSeats.nativeElement.value, this.newStatus.nativeElement.value).subscribe(response => {
       this.roomsService.getRooms().subscribe(data => {
+        this.isVisibleAddBlock = false;
+        this.isVisibleEditBlock = false;
+        
         this.rooms = [...data];
         this.filteredRooms = [...data];
       })
@@ -81,22 +84,35 @@ export class RoomsComponent implements OnInit {
     }
   }
 
+  /**
+   * Handler for delete button click
+   * It removes an element from the list and 
+   */
   deleteSelectedRoom() {
     if (!this.isEmptyObject(this.selectedRoom)) {
       this.roomsService.deleteRoom(this.selectedRoom.idRoom).subscribe(data => {
-        this.roomsService.getRooms().subscribe(data => {
-          this.rooms = [...data];
-          this.filteredRooms = [...data];
-        })
+        this.isVisibleAddBlock = false;
+        this.isVisibleEditBlock = false;
+
+        const elementIndex = this.rooms.findIndex(element => element.idRoom === this.selectedRoom.idRoom);
+        this.rooms.splice(elementIndex, 1);
+        this.filteredRooms = [...this.rooms];
       });
     }
   }
 
+  /**
+   * Handler for save button click
+   * It saves room's changes
+   */
   saveChangedRoom() {
     let categoryName = this.categoryName();
     this.roomsService.changeRoom(this.selectedRoom.idRoom, this.newNumber.nativeElement.value,
       categoryName, this.newCountSeats.nativeElement.value, 
       this.newStatus.nativeElement.value).subscribe(response => {
+        this.isVisibleAddBlock = false;
+        this.isVisibleEditBlock = false;
+
         this.roomsService.getRooms().subscribe(data => {
           this.rooms = [...data];
           this.filteredRooms = [...data];
@@ -106,11 +122,13 @@ export class RoomsComponent implements OnInit {
 
   categoryName() {
     let categoryName;
-    this.categories.map(category => {
+
+    this.categories.forEach(category => {
       if(category.name == this.newCategory.nativeElement.value) {
         categoryName = category.idCategories;
       }
     })
+
     return categoryName
   }
 
