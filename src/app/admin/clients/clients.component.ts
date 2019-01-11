@@ -139,7 +139,6 @@ export class ClientsComponent implements OnInit, OnDestroy {
   }
 
   createNewClient(): void {
-    console.log('asd')
 
     const client: Client = new Client (this.changedAddress.nativeElement.value, this.changedBDate.nativeElement.value, null,
       null, this.changedName.nativeElement.value, this.changedPassport.nativeElement.value, this.changedPhone.nativeElement.value);

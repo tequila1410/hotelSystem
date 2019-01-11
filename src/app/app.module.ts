@@ -13,6 +13,7 @@ import { RoomsComponent } from './admin/rooms/rooms.component';
 import { ClientsComponent } from './admin/clients/clients.component';
 import { AddComponent } from './admin/requests/add/add.component';
 import { ListComponent } from './admin/requests/list/list.component';
+import {BookingModule} from './admin/requests/booking.module';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ListComponent } from './admin/requests/list/list.component';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    AuthModule
+    AuthModule,
+    BookingModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

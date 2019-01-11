@@ -1,3 +1,113 @@
-<p>
-  add works!
-</p>
+<div class="booking-add">
+  <aside class="booking-left-side">
+    <div class="booking-top">
+      <form class="form-inline" role="form">
+        <div class="form-group">
+          <label class="filter-col">Категория: </label>
+          <select (change)="onCategoryChange($event)" id="category" class="form-control" #catSelect>
+            <option *ngFor="let cat of category" [value]="cat.idCategories">{{cat.name}}</option>
+          </select>
+          <label class="filter-col">Количество мест: </label>
+          <select id="seats" class="form-control" #seatsSelect>
+            <option *ngIf="seats?.length == 0" [value]="0">Нет мест!</option>
+            <option *ngFor="let seat of seats" [value]="seat.countSeats">{{seat.countSeats}}</option>
+          </select>
+          <a (click)="searchRoom()" class="btn btn-default">Найти</a>
+        </div>
+      </form>
+      <div class="tableRoomsContainer">
+        <table class="table table-bordered">
+          <thead class="text-center rooms-head">
+          <tr>
+            <th class="text-center">Номер</th>
+            <th class="text-center">Цена</th>
+          </tr>
+          </thead>
+          <tbody class="text-center rooms-body">
+          <tr *ngFor="let room of roomsToSelect" (click)="selectRoom(room)">
+            <td>{{room.number}}</td>
+            <td>{{room.price}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="booking-bot">
+      <form class="form-inline" role="form">
+        <div class="form-group">
+          <label class="filter-col">Поиск по:</label>
+          <select id="search-pattern" class="form-control" #clientSelect>
+            <option value="1">ФИО</option>
+            <option value="2">Номеру телефона</option>
+          </select>
+          <input type="text" class="form-control" id="search-field" placeholder="Введите данные для поиска" #clientInput>
+          <a class="btn btn-default" (click)="searchClient()">Найти</a>
+        </div>
+      </form>
+      <div class="tableClientsContainer">
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th class="text-center">ФИО</th>
+            <th class="text-center">Телефон</th>
+          </tr>
+          </thead>
+          <tbody class="text-center">
+          <tr *ngFor="let client of clients" (click)="selectClient(client)">
+            <td class="td-name">{{client.name}}</td>
+            <td class="td-phone">{{client.phone}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </aside>
+  <aside class="booking-right-side">
+    <blockquote>
+      <h2>Оформление заявки</h2>
+      <br>
+      <form class="form-inline" role="form">
+        <div class="form-group">
+          <p class="filter-col">Комната номер: </p>
+          <p class="filter-col"><b>{{selectedRoom?.number}}</b></p>
+        </div>
+      </form>
+      <form class="form-inline" role="form">
+        <div class="form-group">
+          <p class="filter-col">ФИО клиента: </p>
+          <p class="filter-col"><b>{{selectedClient?.name}}</b></p>
+        </div>
+      </form>
+      <form class="form-inline" role="form">
+        <div class="form-group">
+          <p class="filter-col">Дата заселения: </p>
+          <p><b> {{currentDate}}</b></p>
+        </div>
+      </form>
+      <form class="form-inline" role="form">
+        <div class="form-group">
+          <p class="filter-col">Дата выселения: </p>
+          <b><input type="date" [min]="minEvictionDate" id="evictionDate" class="form-control" #evictionDate></b>
+        </div>
+      </form>
+      <form class="form-inline" role="form">
+        <div class="form-group">
+          <a (click)="countPrice()" class="btn btn-default">Рассчитать стоимость</a>
+        </div>
+      </form>
+      <form class="form-inline" role="form">
+        <div class="form-group">
+          <p class="filter-col">Стоимость проживания: </p>
+          <p class="filter-col"><b>{{bookingPrice}}</b></p>
+          <p class="filter-col">грн</p>
+        </div>
+      </form>
+      <br>
+      <form class="form-inline" role="form">
+        <div class="form-group">
+          <a (click)="saveBooking()" class="btn btn-default">Оформить заявку</a>
+        </div>
+      </form>
+    </blockquote>
+  </aside>
+</div>

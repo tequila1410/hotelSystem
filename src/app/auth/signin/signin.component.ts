@@ -14,7 +14,16 @@ export class SigninComponent implements OnInit {
   
   constructor(private userService: UserService, private router: Router) {}
   
+  handleHash(pass: string) {
+    let tmpPass = pass[0].charCodeAt(0).toString();
+    for(let i = 1; i < pass.length; i++) {
+      tmpPass = tmpPass + '$' + pass[i].charCodeAt(0);
+    }
+    return tmpPass;
+  }
+  
   ngOnInit() {
+    console.log(this.handleHash('myznikov'))
   }
   
   /**
