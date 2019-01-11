@@ -35,44 +35,29 @@ export class ListService {
   }
 
   /**
-   * Query to server to save changed client info
-   * @param {Client} client
+   * Query to server to get current client
    */
-//   saveChangedClient(client: Client): Observable<any> {
-//     let postData = {
-//       id: client.idClient,
-//       name: client.name,
-//       passport: client.passport,
-//       phone: client.phone,
-//       bdate: client.birthDate,
-//       address: client.address
-//     };
-    
-//     return this.http.post(`${environment.apiUrl}/client/edit`, postData);
-//   }
+  getClientById(clientId: number): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/client/findby/id/${clientId}`)
+  }
+  /**
+   * Query to server to get current room
+   */
+  getRoomById(roomNumber: number): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/room/findby/number/${roomNumber}`)
+  }
 
   /**
-   * Query to server to save new client 
-   * @param {Client} client
+   * Get count days
+   * @param start
+   * @param end
    */
-//   addNewClient(client: Client): Observable<any> {
-
-//     let postData = {
-//       name: client.name,
-//       passport: client.passport,
-//       phone: client.phone,
-//       bdate: client.birthDate,
-//       address: client.address
-//     };
-    
-//     return this.http.post(`${environment.apiUrl}/client/add`, postData);
-//   }
-
-  /**
-   * This methods removes room by it's id
-   * @param clientId
-   */
-//   deleteClient(clientId: any) {
-//     return this.http.delete(`${environment.apiUrl}/client/delete/${clientId}`);
-//   } 
+  static getDaysCount(start, end) {
+    const oneDay = 24 * 60 * 60 * 1000;
+    const startSplit = start.split('.');
+    const endSplit = end.split('.');
+    const dateStart = new Date(startSplit[2], startSplit[1], startSplit[0]);
+    const dateEnd = new Date(endSplit[2], endSplit[1], endSplit[0]);
+    return Math.round(Math.abs((dateEnd.getTime() - dateStart.getTime()) / (oneDay)));
+  }
 }
