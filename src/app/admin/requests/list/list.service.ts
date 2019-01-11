@@ -21,12 +21,19 @@ export class ListService {
   }
   
   /**
-   * Query to server to get all clients
+   * Query to server to get current bookings
    */
   getCurrentBookings(): Observable<any> {
     return this.http.get(`${environment.apiUrl}/booking/get/bookings/curDate/${this.currentDate}`)
   }
-  
+
+  /**
+   * Query to server to get current bookings
+   */
+  getAllBookings(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/booking/get/all`)
+  }
+
   /**
    * Query to server to save changed client info
    * @param {Client} client

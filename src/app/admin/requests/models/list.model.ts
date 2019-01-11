@@ -1,4 +1,4 @@
-export class BookingList {
+export class Booking {
     public countClients: number;
     public dateCheck: string;
     public dateEviction: string;

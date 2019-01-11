@@ -16,10 +16,10 @@
     </div>
     <table *ngIf="clients.length" class="table table-bordered">
       <thead>
-      <tr>
-        <th class="text-center">ФИО</th>
-        <th class="text-center">Телефон</th>
-      </tr>
+        <tr>
+          <th class="text-center">ФИО</th>
+          <th class="text-center">Телефон</th>
+        </tr>
       </thead>
       <tbody class="text-center">
       <tr *ngFor="let client of filteredClients" [ngClass]="{'client_rows': true, 'active': client.idClient == selectedClient?.idClient}" (click)="selectClient(client)">

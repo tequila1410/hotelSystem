@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ListService} from './list.service';
+import {Booking} from '../models/list.model'
 
 
 
@@ -15,11 +16,26 @@ export class ListComponent implements OnInit {
    */
   currentOrAllBookingsVisible:boolean = true;
 
+  /**
+   * array of current bookings
+   * @type {Booking}
+   */
+  currentBookings:Booking[] = [];
+
+  /**
+   * array of current bookings
+   * @type {Booking}
+   */
+  allBookings:Booking[] = [];
+
   constructor(private listService: ListService) {}
 
   ngOnInit() {
-    this.listService.getCurrentBookings().subscribe(data => {
-      console.log(data);
+    this.listService.getCurrentBookings().subscribe((bookings: Booking[]) => {
+      this.currentBookings = [...bookings];
+    })
+    this.listService.getAllBookings().subscribe((bookings: Booking[]) => {
+      this.allBookings = [...bookings];
     })
   }
 
