@@ -166,17 +166,10 @@ export class AddComponent implements OnInit {
     }
   }
   
+  /**
+   * To save new booking
+   */
   saveBooking() {
-    const start = new Intl.DateTimeFormat('en-GB', {
-      year: 'numeric',
-      day: 'numeric',
-      month: 'numeric',
-    }).format(new Date());
-    const end = new Intl.DateTimeFormat('en-GB', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric'
-    }).format(this.evictionDate.nativeElement.valueAsDate);
     
     let room = this.selectedRoom;
     let client = this.selectedClient;

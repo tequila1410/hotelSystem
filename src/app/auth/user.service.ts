@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
+import {Observable} from 'rxjs';
 
 @Injectable()
 export class UserService {
@@ -11,10 +12,18 @@ export class UserService {
    */
   isVerified: boolean;
   
+  /**
+   * @ignore
+   */
   constructor(private httpClient: HttpClient) {
   }
   
-  loginUser(username: string, password: string) {
+  /**
+   * Query to server to log in user
+   * @param {string} username
+   * @param {string} password
+   */
+  loginUser(username: string, password: string): Observable<any> {
     const postData = {
       'username': username, 'password': password
     };
@@ -22,13 +31,18 @@ export class UserService {
     return this.httpClient.post(`${environment.apiUrl}/auth/login`, postData, { withCredentials: true });
   }
   
-  verifyAuthentication() {
+  /**
+   * Query to server to verify user if user is login
+   */
+  verifyAuthentication(): Observable<any> {
     return this.httpClient.get(`${environment.apiUrl}/auth/verifyAuthentication`, { withCredentials: true });
   }
   
-  logout() {
+  /**
+   * Query to server to logout user and clean cookies
+   */
+  logout(): Observable<any> {
     return this.httpClient.post(`${environment.apiUrl}/auth/logout`, null, { withCredentials: true });
   }
-  
   
 }
